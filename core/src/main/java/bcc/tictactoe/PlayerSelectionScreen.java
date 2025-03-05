@@ -21,19 +21,42 @@ public class PlayerSelectionScreen extends ScreenAdapter{
     private Stage stage;
     private Skin skin;
 
-    public PlayerSelectionScreen(TicTacToe game, int curPlayer) {//checkpoint 1
-       //load skin
+    public PlayerSelectionScreen(TicTacToe game, int curPlayer) {
+        this.game = game;
+        this.stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        
+        // Load the UI skin
+        this.skin = new Skin(Gdx.files.internal("skins/glassy/glassy-ui.json"));
 
-       //add title saying something like "select player"
-
-       //if you would like a background color behind the title, you can use the helper method in the Constants file
-
-       //check out the documentation linked in the readme / on canvas
-
-       //add buttons to select from the player types listed in constants.java. If there isSimulated is true, don't let human be an option. 
     
-       //curplayer will either be 0 or 1
-    }
+        // Create a table to arrange UI elements
+        Table table = new Table();
+        table.setFillParent(true);
+        stage.addActor(table);
+    
+        // Create a title label with a background color
+        String titleText = "Select Player " + (curPlayer + 1);
+        Container<Label> titleLabel = Constants.createLabelWithBackgrounColor(titleText, Color.BLUE, skin);
+        table.add(titleLabel).padBottom(20).row(); 
+    
+        // Add buttons for each player type
+        for (String option : Constants.PLAYER_OPTIONS) {
+            if (game.getIsSimulated() && option.equals("Human")) {
+                continue; // Skip Human option if the game is simulated
+            }
+    
+            TextButton button = new TextButton(option, skin);
+            button.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    game.setPlayer(curPlayer, option);
+                }
+            });
+    
+            table.add(button).pad(10).row();
+        }
+    }    
 
     @Override
     public void render(float delta) {
