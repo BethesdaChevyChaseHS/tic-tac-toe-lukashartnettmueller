@@ -48,24 +48,32 @@ public class GameDisplay extends ScreenAdapter {
 
         // Labels for player records
         recordLabelX = new Label("X Record: " + game.getPlayer1().getRecord(), skin);
-        recordLabelX.setFontScale(1.5f);
-        recordLabelX.setColor(Color.WHITE);
-        recordLabelX.setPosition(20, Gdx.graphics.getHeight() - 50); 
-
+        recordLabelX.setFontScale(2f);
+        recordLabelX.setColor(Color.BLUE); 
+        recordLabelX.setStyle(new Label.LabelStyle(recordLabelX.getStyle().font, Color.BLUE));
+        recordLabelX.setPosition(20, Gdx.graphics.getHeight() - 50);
+        
         recordLabelO = new Label("O Record: " + game.getPlayer2().getRecord(), skin);
-        recordLabelO.setFontScale(1.5f);
-        recordLabelO.setColor(Color.WHITE);
-        recordLabelO.setPosition(20, Gdx.graphics.getHeight() - 80); 
-
+        recordLabelO.setFontScale(2f); 
+        recordLabelO.setColor(Color.WHITE); 
+        recordLabelO.setStyle(new Label.LabelStyle(recordLabelO.getStyle().font, Color.RED));
+        recordLabelO.setPosition(20, Gdx.graphics.getHeight() - 80);
+        
+        
         turnLabel = new Label("Turn: " + game.getCurPlayerMark(), skin);
-        turnLabel.setFontScale(1.5f);
-        turnLabel.setColor(Color.WHITE);
+        turnLabel.setFontScale(2f); 
+        turnLabel.setColor(Color.WHITE); 
         turnLabel.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() - 100, Align.center);
-
+        
+        
         stage.addActor(recordLabelX);
         stage.addActor(recordLabelO);
         stage.addActor(turnLabel);
     }
+
+
+
+    
 
     public void initTableDisplay() {
         boardTable = new Table();
@@ -93,6 +101,14 @@ public class GameDisplay extends ScreenAdapter {
         });
         stage.addActor(boardTable);
     }
+
+
+
+
+
+
+
+
 
     public void handleBoardClick(int row, int col) {
         if (game.getBoardState().isCellEmpty(row, col) && !gameOver) {
@@ -167,9 +183,9 @@ public class GameDisplay extends ScreenAdapter {
     public void resetGame() {
         game.getBoardState().reset();
         game.setCurPlayer(Mark.X);
-        gameOver = false;
         updateBoardDisplay();
         updateTurnLabel();
+        gameOver = false;
     }
 
     public void updateBoardDisplay() {
@@ -198,6 +214,16 @@ public class GameDisplay extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
+
+        if (!(game.getCurPlayerObj() instanceof Human)) {
+            Move m = game.getCurPlayerObj().makeMove(game.getBoardState(), game.getCurPlayerMark());
+            game.getBoardState().makeMove(m, game.getCurPlayerMark());
+            handleMoveMade();
+            game.nextPlayer();
+        }
+
+
+
     }
 
     @Override

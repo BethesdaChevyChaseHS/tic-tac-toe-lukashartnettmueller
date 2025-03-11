@@ -9,7 +9,7 @@ public class TicTacToe extends Game {
     private int curPlayer = 0;
     private int numberOfRounds;
     private boolean isSimulated;
-    private int round = 0;
+    private int round = 1;
 
     @Override
     public void create() {
@@ -26,13 +26,22 @@ public class TicTacToe extends Game {
             } else {
                 player2 = new Human();
             }
-        } else if (option.equalsIgnoreCase("RandomAI")) {
+        } else if (option.equalsIgnoreCase("Random AI")) {
             if (curPlayer == 0) {
                 player1 = new RandomAI();
             } else {
                 player2 = new RandomAI();
             }
+
+
+         } else if (option.equalsIgnoreCase("Slightly Smart AI")) {
+                if (curPlayer == 0) {
+                    player1 = new SlightlySmartAI();
+                } else {
+                    player2 = new SlightlySmartAI();
+                }
         }
+    
 
         if (curPlayer == 0) {
             setScreen(new PlayerSelectionScreen(this, 1));
@@ -80,6 +89,16 @@ public class TicTacToe extends Game {
 
     public void setCurPlayer(Mark mark) {
         this.curPlayer = (mark == Mark.X) ? 0 : 1; // Convert Mark to int
+    }
+
+    public Player getCurPlayerObj(){
+
+        if(curPlayer == 0){
+            return player1;
+        }
+        else{
+            return player2;
+        }
     }
     
     

@@ -16,22 +16,22 @@ public final class Constants {
         // Create the label using the provided skin.
         Label label = new Label(text, skin);
 
-        // Create a 1x1 Pixmap and fill it with the background color.
+       .
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(bgColor);
         pixmap.fill();
 
-        // Convert the Pixmap to a Texture and dispose of the Pixmap.
+     
         Texture texture = new Texture(pixmap);
         pixmap.dispose();
 
-        // Create a TextureRegionDrawable from the texture.
+      
         TextureRegionDrawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(texture));
 
-        // Wrap the Label in a Container and set its background.
+     
         Container<Label> container = new Container<Label>(label);
         container.setBackground(backgroundDrawable);
-        container.pad(10); // Optional: add padding around the label.
+        container.pad(10); 
 
         return container;
     }
