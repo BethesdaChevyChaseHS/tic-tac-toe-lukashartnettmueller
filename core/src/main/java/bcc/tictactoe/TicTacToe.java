@@ -40,6 +40,14 @@ public class TicTacToe extends Game {
                 } else {
                     player2 = new SlightlySmartAI();
                 }
+            }
+            else if(option.equalsIgnoreCase("Smart AI")){
+                if (curPlayer == 0) {
+                    player1 = new SmartAI();
+                } else {
+                    player2 = new SmartAI();
+                }
+            
         }
     
 
